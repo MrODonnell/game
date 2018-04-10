@@ -1,7 +1,7 @@
 import random
+global jewel
+jewel = False
 class game:
-    def __inxxit__(self):
-        print("hello game")
     def __init__(self):
         door = "Locked"
         global haveKey
@@ -15,12 +15,12 @@ class game:
                         instructions are simple. When you are given a choice, you maytype 'L' for Left, 'U' for up, and
                         'D' for down. Remember to capitalize! ;) """ % name)
         ready = input("Are you ready to go %s? " % name)
-        ready = ready.upper()
-        if ready == "Yes":
+        ready = ready.lower()
+        if ready == "yes":
             print(" ")
             print("You will now start. The door in locked and you can't exit the dungeon until you have completed each room")
             room.zero()
-        elif ready== "Y":
+        elif ready== "y":
             print(" ")
             print("You will now start. The door in locked and you can't exit the dungeon until you have completed each room")
             room.zero()
@@ -30,32 +30,35 @@ class game:
             print("\n Amazing! You completed this game(though very simplistic), still we have to commend you for your efforts!")
             print("\n Would you like to go again?")
             goAgain = input("\n Would you?")
-            goAgain.upper()
-            if goAgain == "Yes" or goAgain == "Y":
-                room.start
+            goAgain.lower()
+            if goAgain == "yes" or goAgain == "y":
+                room.start  #should this be: room.start()
             else:
-                print(done)
+                print(done)     # I don't think this can do anything
+                                    #   done (without quotes) is a variable
+                                    #   and no value has been assigned to it
 
 class room():
+    rmjewel = False
     def zero():
         print("""Room zero...the starting point of all...you've returned here or have just started. The room has some torches lit in the corners.""")
         direction = input("Which way would you like to go? (Left, Up, or Down?)")
         direction = direction.upper()
         if direction == "L":
-            room.two
+            room.two()
         elif direction == "Left":
             room.two()
         elif direction == "U":
-            room.four
+            room.four()
         elif direction == "Up":
              room.four()
         elif direction == "D":
             room.two()
         elif direction == "Down":
             room.two()
-            if haveKey == True:
+            if haveKey:
                 game.finished()
-            elif fakeKeyHave == "True":
+            elif fakeKeyHave == True:
                 print("""\n You stick the key in the door and try turning it, but it won't budge. You try a little harder and it breaks...turns out that was a fake key...""")
                 room.zero()
             else:
@@ -67,6 +70,8 @@ class room():
             room.zero()
 
     def one():
+        if jewel:
+            print("***************** you have the jewels *****************")
         print("\n Room one... This is a dead end, you look and around and see a old standing in the corner")
         print("  ")
         talk = input("Would you like to talk to him?")
@@ -124,6 +129,11 @@ class room():
             room.three()
 
     def four():
+        
+        jewel_ans = input("did you steal any jewels?")
+        if jewel_ans == 'yes':
+            room.rmjewel = True
+            print("jewel is now true")
         print("""\n Room four... The room is lined with expensive family jewels and a deep cackle can be heard in the distance. There are three exits""")
         print(" ")
         direction= input("Which way would you like to go? (Up, Left, Down)")
@@ -142,6 +152,8 @@ class room():
             room.zero()
         else:
             room.four()
+
+        
 
     def five():
         print("""\n Room five... The room you've found looks to be an old dungeon room. The cells are looked and there seems yo be some treasure in the one to your right""")
@@ -166,6 +178,10 @@ class room():
         direction = input("Would you like to exit the room?")
 
     def seven():
+        if room.rmjewel:
+            print("***************** you have the jewels *****************")
+        else:
+            print("***************** you have the jewels *****************")
         print("""\n Room seven... You walk into a room with three exits one seems to lead to a kitchen, and this seems to be a dining room with a long table that looks recently set and a chandiler hanging from the ceiling with candles burning""")
         print("  ")
         direction = input("Which way would you like to go?(Left, Down or Right)")
@@ -189,7 +205,7 @@ class room():
     def eight():
         print("\n Room eight... You enter a kitchen with two exits, and a very expensive looking one at that!")
         print("  ")
-        direction = input("Which way would you like to go? (Letf, or Down?)")
+        direction = input("Which way would you like to go? (Left, or Down?)")
         direction.upper()
         if direction == "L":
             room.seven
@@ -202,6 +218,6 @@ class room():
 g = game()
 # g.start()
 print(" ")
-print(done)
+print(done)     # see comment above
 
 
